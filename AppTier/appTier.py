@@ -1,4 +1,6 @@
+#!/usr/bin/env python3
 import subprocess
+import json
 import os
 import ast
 import yaml
@@ -15,7 +17,7 @@ sqs = boto3.client('sqs', region_name='us-east-1',
                         aws_secret_access_key=settings['aws_secret_access_key'])
 
 INPUT_BUCKET_NAME = settings["input_bucket_name"]
-OUTPUT_BUCKET_NAME = settings["input_bucket_name"]
+OUTPUT_BUCKET_NAME = settings["output_bucket_name"]
 REQUEST_QUEUE_URL = settings['sqs_request_queue']
 RESPONSE_QUEUE_URL = settings['sqs_response_queue']
 
@@ -53,11 +55,13 @@ while(True):
     output = output.split(',')
     output_key = output[0].split('.')[0]
     output_value = f'({output_key},{output[1]})'
-    sqs_response = json.{output_key + ".JPEG":output[1]}
+    sqs_response = json.dumps({output_key + ".JPEG":output[1]})
     result = s3.put_object(Body=output_value, Bucket=OUTPUT_BUCKET_NAME, Key=output_key)
-    print('Push result is ',result)
+    print('S3 Push result is ',result)
     # Send message to SQS response queue
     response = sqs.send_message(
         QueueUrl=RESPONSE_QUEUE_URL,
         MessageBody= sqs_response
     )
+    print('SQS Push result is ',response)
+    
