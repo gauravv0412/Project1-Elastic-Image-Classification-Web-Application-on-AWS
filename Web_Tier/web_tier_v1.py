@@ -63,4 +63,4 @@ def upload_image():
                 return filename[3:] + ".JPEG : " + ans[:-4]
 
 if __name__ == "__main__":
-    app.run(threaded = True)
+    app.run(host = '0.0.0.0', port = 5000, debug = True)
