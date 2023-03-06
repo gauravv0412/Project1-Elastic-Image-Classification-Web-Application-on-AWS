@@ -1,4 +1,4 @@
-# CSE 546 Project 1 
+# CSE 546 Project 1: Elastic Image Classification Web-Application on AWS
 
 Daksh Dobhal, Shivanshu Verma, Gaurav Verma
 ## Dependencies
